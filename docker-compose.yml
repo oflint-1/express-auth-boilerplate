@@ -1,0 +1,21 @@
+version: "2.0"
+
+# Define the services/containers to be run
+services:
+  express-auth-api: #name of your service
+    build: . # specify the directory of the Dockerfile
+    restart: always
+    ports:
+      - "3000:3000" #specify ports forwarding
+    links:
+      - database # link this service to the database service
+    volumes:
+      - .:/app
+    depends_on:
+      - database
+  database: # name of the service
+    image: mongo # specify image to build container from
+    ports:
+      - "27017:27017"
+    volumes:
+      - /data/db
